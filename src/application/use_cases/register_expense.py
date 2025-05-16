@@ -23,8 +23,8 @@ def register_expense(
     """
 
     payload = {
-        "plan_id": plan.id,
-        "user_nickname": user.username,
+        "planId": plan.id,
+        "username": user.username,
         "expense": expense.to_dict()
     }
 

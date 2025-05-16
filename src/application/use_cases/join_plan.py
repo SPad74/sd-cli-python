@@ -17,9 +17,10 @@ def join_plan(plan_id: int, user: User, event_publisher: EventPublisher, url_bas
     :return: Plan actualizado
     """
     # Publicar evento al backend Kafka
+    print(f"Publicando evento para unirse al plan {plan_id} para el usuario {user}")
     payload = {
         "planId": plan_id,
-        "userId": user.username
+        "username": user.username
     }
     json_data = to_json(payload)
     event_publisher.publish("join_plan", json_data)
@@ -27,6 +28,15 @@ def join_plan(plan_id: int, user: User, event_publisher: EventPublisher, url_bas
     # Obtener plan actualizado desde el backend tradicional (REST)
     response = requests.get(f"{url_base}/plans/{plan_id}")
     response.raise_for_status()  # Lanza excepción si el status no es 2xx
-    print(f"Respuesta del backend tradicional: {response.text}")
-    updated_plan = from_json(response.text, Plan)
+    try:
+        updated_plan = from_json(response.text, Plan)
+    except Exception as e:
+        print(f"Error al deserializar el plan: {e}")
+        return Plan(
+            id=plan_id,
+            name="error",
+            participants=[user],
+            expenses=[],
+            date=""
+        )
     return updated_plan
