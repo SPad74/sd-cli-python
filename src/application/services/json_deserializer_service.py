@@ -5,6 +5,7 @@ from domain.entities.debt import Debt
 from domain.entities.plan import Plan
 
 def from_json(json_str: str, cls):
+    print(f"Deserializando JSON: {json_str}")
     data = json.loads(json_str)
     return from_dict(data, cls)
 
@@ -20,11 +21,12 @@ def from_dict(data: dict, cls):
 
     elif cls == Expense:
         return Expense(
-            id=data["id"],
+            id=data["expenseId"],
             name=data["name"],
             amount=data["amount"],
             date=data["date"],
-            type=data.get("type", "shared")
+            type=data["type"],
+            plan_id=data["plan"],
         )
 
     elif cls == Debt:
@@ -37,9 +39,9 @@ def from_dict(data: dict, cls):
 
     elif cls == Plan:
         return Plan(
-            id=data["id"],
+            id=data["planId"],
             name=data["name"],
-            users=[from_dict(user, User) for user in data.get("users", [])],
+            participants=[from_dict(user, User) for user in data.get("users", [])],
             expenses=[from_dict(exp, Expense) for exp in data.get("expenses", [])],
             date=data["date"]
         )

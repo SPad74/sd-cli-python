@@ -10,7 +10,8 @@ def register_expense(
     plan: Plan,
     user: User,
     expense: Expense,
-    event_publisher: EventPublisher
+    event_publisher: EventPublisher,
+    event_subscriber: EventPublisher
 ) -> None:
     """
     Registra un gasto en un plan enviando la solicitud al backend, sin esperar respuesta.

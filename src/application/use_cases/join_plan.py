@@ -18,8 +18,8 @@ def join_plan(plan_id: int, user: User, event_publisher: EventPublisher, url_bas
     """
     # Publicar evento al backend Kafka
     payload = {
-        "plan_id": plan_id,
-        "user": user.to_dict()
+        "planId": plan_id,
+        "userId": user.username
     }
     json_data = to_json(payload)
     event_publisher.publish("join_plan", json_data)
@@ -27,6 +27,6 @@ def join_plan(plan_id: int, user: User, event_publisher: EventPublisher, url_bas
     # Obtener plan actualizado desde el backend tradicional (REST)
     response = requests.get(f"{url_base}/plans/{plan_id}")
     response.raise_for_status()  # Lanza excepción si el status no es 2xx
-
+    print(f"Respuesta del backend tradicional: {response.text}")
     updated_plan = from_json(response.text, Plan)
     return updated_plan

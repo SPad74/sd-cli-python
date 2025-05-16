@@ -2,7 +2,7 @@ from domain.entities.user import User
 from domain.entities.expense import Expense
 
 class Plan:
-    def __init__(self, id: int, name: str, participants: list[User], expenses: list[Expense], date: str):
+    def __init__(self, id: int, name: str, date: str, participants: list[User]=None, expenses: list[Expense]=None):
         self.id = id
         self.name = name
         self.date = date

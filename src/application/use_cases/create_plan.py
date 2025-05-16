@@ -1,18 +1,25 @@
 from domain.entities.plan import Plan
-from domain.entities.user import User
 from application.services.json_serializer_service import to_json
 from application.services.json_deserializer_service import from_json
 from ports.http_client import HttpClient
-from datetime import date
+import datetime
+import requests
 
 
-def create_plan(name: str, creator: User, http_client: HttpClient, api_url_base: str) -> Plan:
-    current_date = date.today().isoformat()
-    new_plan = Plan(id=0, name=name, users=[creator], expenses=[], date=current_date)
-    json_data = to_json(new_plan)
+def create_plan(name: str, api_url_base: str) -> Plan:
+    # current_date = datetime.now().replace(microsecond=0).isoformat()
+    json_data = to_json(dict({
+        "name": name,
+        "date": "2023-10-01T00:00:00",
+    }))
 
     # Enviar a backend por HTTP
-    full_url = f"{api_url_base}/plans"
-    response_json = http_client.post(full_url, json_data)
+    response = requests.post(
+        f"{api_url_base}/plans/create",
+        data=json_data,
+        headers={"Content-Type": "application/json"}
+    )
 
-    return from_json(response_json, Plan)
+    response.raise_for_status()  # Lanza excepción si hay error
+
+    return from_json(response.text, Plan)
