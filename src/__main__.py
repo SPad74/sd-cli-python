@@ -41,7 +41,7 @@ def main():
     print("Bienvenido a la aplicación CLI.")
 
     while True:
-        print("Comandos disponibles: create_user | login | create_plan | join_plan | register_expense | exit")
+        print("Comandos disponibles: create_user | create_plan | join_plan | register_expense | exit")
         command = input("Ingresa comando: ").strip()
 
         if command == "create_user":
