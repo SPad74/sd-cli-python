@@ -1,3 +1,4 @@
+import time
 import requests
 from domain.entities.user import User
 from domain.entities.plan import Plan
@@ -23,6 +24,8 @@ def join_plan(plan_id: int, user: User, event_publisher: EventPublisher, url_bas
     }
     json_data = to_json(payload)
     event_publisher.publish("join_plan", json_data)
+
+    time.sleep(5)
 
     # Obtener plan actualizado desde el backend tradicional (REST)
     response = requests.get(f"{url_base}/plans/{plan_id}")
