@@ -1,8 +1,10 @@
 from kafka import KafkaConsumer
 from ports.event_subscriber import EventSubscriber
+import os
+from dotenv import load_dotenv
 
 class KafkaConsumerAdapter(EventSubscriber):
-    def __init__(self, bootstrap_servers='localhost:9092', group_id='default-group'):
+    def __init__(self, bootstrap_servers=os.getenv("KAFKA_BROKER"), group_id='default-group'):
         self.consumer = KafkaConsumer(
             bootstrap_servers=bootstrap_servers,
             group_id=group_id,

@@ -43,6 +43,9 @@ def from_dict(data: dict, cls):
             expenses=[from_dict(exp, Expense) for exp in data.get("expenses", [])],
             date=data["date"]
         )
+    
+    elif cls == dict:
+        return data
 
     else:
         raise ValueError(f"No deserialization logic for class: {cls}")

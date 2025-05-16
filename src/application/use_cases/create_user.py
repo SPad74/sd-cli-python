@@ -13,7 +13,7 @@ def create_user(user: User, url_base: str) -> User:
     :return: Usuario creado con posibles datos actualizados (como ID)
     """
     json_data = to_json(user)
-    response = requests.post(f"{url_base}/users", data=json_data, headers={"Content-Type": "application/json"})
+    response = requests.post(f"{url_base}/users/create", data=json_data)
     response.raise_for_status()  # Lanza excepción si hay error
 
     created_user = from_json(response.text, User)
