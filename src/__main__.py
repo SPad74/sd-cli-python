@@ -49,11 +49,11 @@ def main():
             password = input("Ingresa la contraseña: ").strip()
             user = handle_create_user(username=username, password=password)
             print(repr(user))
-        elif command == "login":
-            username = input("Ingresa el nombre de usuario: ").strip()
-            password = input("Ingresa la contraseña: ").strip()
-            user = handle_login(password=password, username=username)
-            print(repr(user))
+        # elif command == "login":
+        #     username = input("Ingresa el nombre de usuario: ").strip()
+        #     password = input("Ingresa la contraseña: ").strip()
+        #     user = handle_login(password=password, username=username)
+        #     print(repr(user))
         elif command == "create_plan":
             if user is None:
                 print("Debes iniciar sesión primero.")
@@ -63,7 +63,8 @@ def main():
             idPlan = plan.id
             print(f"Plan creado: {repr(plan)}")
         elif command == "join_plan":
-            plan = handle_join_plan(plan.id, user)
+            plan_id = int(input("Ingresa el ID del plan al que deseas unirte: ").strip())
+            plan = handle_join_plan(plan_id, user)
             idPlan = plan.id
             print(f"Te has unido al plan: {repr(plan)}")
         elif command == "register_expense":
@@ -79,7 +80,7 @@ def main():
 
 if __name__ == "__main__":
     # Configura tus brokers Kafka aquí
-    bootstrap_servers = ["192.168.18.157:9092"]
+    bootstrap_servers = ["10.24.160.135:9092"]
 
     # Instancia el notificator con la lista de brokers
     expense_notificator = ExpenseNotificatorService(kafka_bootstrap_servers=bootstrap_servers)
