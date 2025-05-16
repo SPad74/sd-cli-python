@@ -11,7 +11,6 @@ def register_expense(
     user: User,
     expense: Expense,
     event_publisher: EventPublisher,
-    event_subscriber: EventPublisher
 ) -> None:
     """
     Registra un gasto en un plan enviando la solicitud al backend, sin esperar respuesta.
@@ -25,7 +24,7 @@ def register_expense(
     payload = {
         "planId": plan.id,
         "username": user.username,
-        "expense": expense.to_dict()
+        "expense": expense.to_dict(),
     }
 
     json_payload = to_json(payload)

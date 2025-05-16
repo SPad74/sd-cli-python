@@ -17,7 +17,6 @@ def join_plan(plan_id: int, user: User, event_publisher: EventPublisher, url_bas
     :return: Plan actualizado
     """
     # Publicar evento al backend Kafka
-    print(f"Publicando evento para unirse al plan {plan_id} para el usuario {user}")
     payload = {
         "planId": plan_id,
         "username": user.username

@@ -5,7 +5,6 @@ from domain.entities.debt import Debt
 from domain.entities.plan import Plan
 
 def from_json(json_str: str, cls):
-    print(f"Deserializando JSON: {json_str}")
     data = json.loads(json_str)
     return from_dict(data, cls)
 
